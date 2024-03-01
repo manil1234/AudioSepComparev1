@@ -1,5 +1,5 @@
 import requests
-
+import json
 # Base URL of your Flask server
 BASE_URL = 'http://localhost:5000'
 
@@ -22,10 +22,11 @@ def separate_song(song_id):
     """
     response = requests.post(f'{BASE_URL}/separate/{song_id}')
     if response.status_code == 200:
-        print('Separation request successful!')
-        print(response.json())
+        print("Separation request successful!")
+        json_data = response.json()  # Extract JSON data from the response
+        print(json.dumps(json_data, indent=4))  # Pretty print the JSON data
     else:
-        print('Error:', response.text)
+        print("Error:", response.text)  # Print the error message if the request was not successful
 
 if __name__ == '__main__':
     while True:
@@ -33,7 +34,7 @@ if __name__ == '__main__':
         print("1. 'songs' - Get the list of available songs")
         print("2. 'separate <song_id>' - Separate audio for a specific song ID")
         print("3. 'exit' - Exit the program")
-        user_input = input("separate PR - Oh No.stem \n Enter command: ").strip()
+        user_input = input("separate Signe Jakobsen - What Have You Done To Me.stem \n Enter command: ").strip()
 
         if user_input.lower() == 'songs':
             get_songs()
