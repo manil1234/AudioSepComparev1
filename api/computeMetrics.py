@@ -35,10 +35,11 @@ def compute_metrics(original_multitrack_file, separated_stems_folder):
         metrics[stem_name] = {
             "Average SDR": calculate_average(sdr),
             "Average ISR": calculate_average(isr),
-            "Average SAR": calculate_average(sar),
-            "Average SIR": calculate_average(sir)
+            "Average SAR": calculate_average(sar)
         }
-
+    metrics["overall"] = {
+        "Average SDR": (metrics["drums"]["Average SDR"] + metrics["bass"]["Average SDR"] + metrics["other"]["Average SDR"] + metrics["vocals"]["Average SDR"]) / 4
+    }
     return metrics
 
 # Calculate the averages for each metric
