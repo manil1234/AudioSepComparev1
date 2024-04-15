@@ -38,7 +38,9 @@ def compute_metrics(original_multitrack_file, separated_stems_folder):
             "Average SAR": calculate_average(sar)
         }
     metrics["overall"] = {
-        "Average SDR": (metrics["drums"]["Average SDR"] + metrics["bass"]["Average SDR"] + metrics["other"]["Average SDR"] + metrics["vocals"]["Average SDR"]) / 4
+        "Average SDR": (metrics["drums"]["Average SDR"] + metrics["bass"]["Average SDR"] + metrics["other"]["Average SDR"] + metrics["vocals"]["Average SDR"]) / 4,
+        "Average ISR": (metrics["drums"]["Average ISR"] + metrics["bass"]["Average ISR"] + metrics["other"]["Average ISR"] + metrics["vocals"]["Average ISR"]) / 4,
+        "Average SAR": (metrics["drums"]["Average SAR"] + metrics["bass"]["Average SAR"] + metrics["other"]["Average SAR"] + metrics["vocals"]["Average SAR"]) / 4
     }
     return metrics
 
@@ -46,7 +48,7 @@ def compute_metrics(original_multitrack_file, separated_stems_folder):
 def calculate_average(metric_values):
     valid_values = metric_values.flatten()
     valid_values = valid_values[~np.isnan(valid_values)]
-    valid_values = valid_values[(valid_values != 0) & (valid_values != np.inf)]
+    valid_values = valid_values[(valid_values != np.inf)]
     if len(valid_values) > 0:
         return np.mean(valid_values)
     else:
@@ -54,7 +56,6 @@ def calculate_average(metric_values):
 
 
 if __name__ == "__main__":
-    # Example usage
     multitrack_file = '../musdb18/Signe Jakobsen - What Have You Done To Me.stem.mp4'
     stems_folder = '../spleeter/Signe Jakobsen - What Have You Done To Me.stem'
     metrics = compute_metrics(multitrack_file, stems_folder)
